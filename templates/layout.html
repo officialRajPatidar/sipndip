@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIPnDIP</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="/static/img/sipndip.ico">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .navbar {
+            background-color: #cccccc;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .brand span {
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
+            background-color: transparent;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .nav-button:hover {
+            background-color: white;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Responsive styles */
+        @media only screen and (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .brand {
+                margin-bottom: 10px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .nav-button {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand">
+            <a href="/">
+                <img src="/static/img/sipndip.png" alt="Brand Logo">
+            </a>
+            <a href="/">
+                <span>SIPnDIP</span>
+            </a>
+        </div>
+        <div class="buttons">
+            <a href="{{ url_for('billing') }}"><button class="nav-button">Billing</button></a>
+            <a href="{{ url_for('update_menu') }}"><button class="nav-button">Menu</button></a>
+            <a href="{{ url_for('add_stock') }}"><button class="nav-button">Add Inventory</button></a>
+            <a href="{{ url_for('view_inventory') }}"><button class="nav-button">Inventory</button></a>
+            <div class="dropdown">
+                <button class="nav-button">More</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('admin') }}">Admin</a>
+                    <!-- Add more dropdown items as needed -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div id="flash-messages">
+                    <ul class="flash-messages">
+                        {% for message in messages %}
+                            <div class="flash-message">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
